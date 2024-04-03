@@ -8,18 +8,16 @@ const user = require("./routes/user");
 const { authenticateUser } = require("./middleware/authentication.js"); // Import authentication middleware
 const app = express();
 
-
 const PORT = process.env.PORT || 5000;
 
 // Connect to Mongodb
 mongoose.connect(process.env.DBM_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Error connecting to MongoDB:', err));
 
 // MIDDLEWARE
 app.use(express.json());
 app.use(cookieParser());
-// app.use(authenticateUser("user"));
 app.use(express.urlencoded({ extended: false }));
 
 
