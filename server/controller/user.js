@@ -26,9 +26,12 @@ async function signUpUser(req, res, next) {
     try {
         const existingUser = await User.findOne({ email: email });
 <<<<<<< HEAD
+<<<<<<< HEAD
         //console.log("email exists: ",existingUser);
 =======
 >>>>>>> b9b01e2e2151f98558ab9f1250423b20ad60713e
+=======
+>>>>>>> 82418c4f2ba12560bfebc023e036cb7d17c2b32b
         if (existingUser)
             return res.status(400).send('Email already exists');
         // return to registration page
