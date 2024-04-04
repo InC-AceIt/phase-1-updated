@@ -1,4 +1,6 @@
 const User = require('../models/User');
+// const Otp = require('../models/otp');
+// const otp = require("../models/otp")
 
 const { generateToken, generateOTP } = require('../services/authentication');
 const nodemailer = require('nodemailer');
@@ -8,13 +10,13 @@ async function loginUser(req, res) {
     try {
         const user = await User.findOne({ email, password });
         //console.log(user);
-        if (!user) return res.status(401).send('Invalid credentials');
+        if (!user) return res.json("")
 
         req.user = user;
         const token = generateToken(user);
         console.log("token ", token);
         res.cookie('authToken', token, { httpOnly: true });
-        res.redirect('/home');
+        
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -26,27 +28,27 @@ async function signUpUser(req, res, next) {
     //console.log(req.body);
     try {
         const existingUser = await User.findOne({ email: email });
-<<<<<<< HEAD
         if (existingUser) {
             // If existing user is present, render the SignUpForm component
-           res.json({"success": false});
+           return res.json({success : false});
         }
         // Continue with user registration
-=======
-        if (existingUser)
-            return res.status(400).send('Email already exists');
-        // return to registration page
->>>>>>> af947a9acc6c7d0939fa1b9fb740517f09ab2e5e
-        req.newUser = new User({
+        // req.newUser = new User({
+        //     username: username,
+        //     email: email,
+        //     password: password
+        // });
+        res.cookie('userData', {
             username: username,
             email: email,
             password: password
         });
+        console.log(req.cookies.userData);
         // console.log(req.newUser);
         next();
     } catch (error) {
         console.error(error);
-        res.json({"success": false});
+        return res.json({success : false});
     }
 }
 
@@ -57,9 +59,7 @@ function logout(req, res) {
 }
 
 const sendOTP = (req, res, next) => {
-    const otp = generateOTP();
-
-    // console.log(req.newUser);
+    const otpValue = generateOTP();
 
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
@@ -76,26 +76,36 @@ const sendOTP = (req, res, next) => {
             name: "AceIt: Get it done!!",
             address: process.env.EMAIL_USER
         },
-        to: req.newUser.email,
+        to: req.cookies.userData.email,
         subject: 'Last step for the first step',
-        text: `Welcome ${req.newUser.username}. Your OTP for registration is: ${otp}`
+        text: `Welcome ${req.cookies.userData.username}. Your OTP for registration is: ${otpValue}`
     };
 
     transporter.sendMail(mailOptions)
-        .then(info => {
-            //console.log('Email sent: ', info.response);
-            res.status(200).cookie('otp', otp, {
-                // httpOnly: true,
+        .then(async info => {
+            // Email sent successfully, store OTP in database
+            // const otp = new Otp({
+            //     email: req.newUser.email, 
+            //     otp: otpValue
+            // });
+            //console.log("otp : ",otpValue);
+            return res.cookie('otp',otpValue, {
+                httpOnly: true,
                 secure: true,
-                maxAge: 600000
-            }).json({"success":true})
+                maxAge: 60000
+            }).json({"success":true});
+            //console.log("HELLO", req.newUser.email);
+            // await otp.save();
+            // res.json({success : true});
+            // return res.status(200).json({
+            //     success: true,
+            //     message: "Login Succesful",
+            // });
         })
         .catch(err => {
-            //return res.json({"success": false});
             console.error('Error: ', err);
+            return res.json({"success" : false});
         });
-        //res.json({"success" : true});
-    
 };
 
 module.exports = { loginUser, signUpUser, logout, sendOTP };
