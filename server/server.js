@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Connect to Mongodb
-mongoose.connect(process.env.DBM_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DBM_CONNECTION)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
@@ -29,6 +29,7 @@ app.use("/user", user);
 
 // Personalized Problems, Analysis - Protected by authentication
 app.use("/profile", authenticateUser, personalized); // Apply authentication middleware to "/profile" route
+
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
