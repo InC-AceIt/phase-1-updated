@@ -25,7 +25,6 @@ async function signUpUser(req, res, next) {
     //console.log(req.body);
     try {
         const existingUser = await User.findOne({ email: email });
-        //console.log("email exists: ",existingUser);
         if (existingUser)
             return res.status(400).send('Email already exists');
         // return to registration page
@@ -82,6 +81,7 @@ const sendOTP = (req, res, next) => {
             })
             next();
             // send to otp entering page
+            // next();
         })
         .catch(err => {
             console.error('Error: ', err);
