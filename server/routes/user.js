@@ -9,7 +9,7 @@ router.post('/login', loginUser);
 router.post('/signup', signUpUser,sendOTP, async (req, res) => {
     
     await req.newUser.save();
-    const token = generateToken(req.body);
+    const token = generateToken(req.newUser);
     res.cookie('authToken', token, { httpOnly: true });
     res.redirect('/home');
 });
