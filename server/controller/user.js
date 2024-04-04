@@ -1,4 +1,5 @@
 const User = require('../models/User');
+
 const { generateToken, generateOTP } = require('../services/authentication');
 const nodemailer = require('nodemailer');
 
@@ -25,28 +26,24 @@ async function signUpUser(req, res, next) {
     //console.log(req.body);
     try {
         const existingUser = await User.findOne({ email: email });
-<<<<<<< HEAD
-<<<<<<< HEAD
-        //console.log("email exists: ",existingUser);
-=======
->>>>>>> b9b01e2e2151f98558ab9f1250423b20ad60713e
-=======
->>>>>>> 82418c4f2ba12560bfebc023e036cb7d17c2b32b
-        if (existingUser)
-            return res.status(400).send('Email already exists');
-        // return to registration page
+        if (existingUser) {
+            // If existing user is present, render the SignUpForm component
+           res.json({"success": false});
+        }
+        // Continue with user registration
         req.newUser = new User({
             username: username,
             email: email,
             password: password
         });
-        //console.log(req.newUser);
+        // console.log(req.newUser);
         next();
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Signup Failed' });
+        res.json({"success": false});
     }
 }
+
 
 function logout(req, res) {
     res.clearCookie('authToken');
@@ -81,19 +78,18 @@ const sendOTP = (req, res, next) => {
     transporter.sendMail(mailOptions)
         .then(info => {
             //console.log('Email sent: ', info.response);
-            res.cookie('otp', otp, {
-                httpOnly: true,
+            res.status(200).cookie('otp', otp, {
+                // httpOnly: true,
                 secure: true,
                 maxAge: 600000
-            })
-            next();
-            // send to otp entering page
-            // next();
+            }).json({"success":true})
         })
         .catch(err => {
+            //return res.json({"success": false});
             console.error('Error: ', err);
         });
-        
+        //res.json({"success" : true});
+    
 };
 
 module.exports = { loginUser, signUpUser, logout, sendOTP };
