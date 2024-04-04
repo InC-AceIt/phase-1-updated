@@ -6,7 +6,8 @@ const { generateToken } = require('../services/authentication.js');
 
 router.post('/login', loginUser);
 
-router.post('/signup', signUpUser, sendOTP, async (req, res) => {
+router.post('/signup', signUpUser,sendOTP, async (req, res) => {
+    
     await req.newUser.save();
     const token = generateToken(req.newUser);
     res.cookie('authToken', token, { httpOnly: true });

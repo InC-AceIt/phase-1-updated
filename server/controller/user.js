@@ -6,7 +6,7 @@ async function loginUser(req, res) {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email, password });
-        console.log(user);
+        //console.log(user);
         if (!user) return res.status(401).send('Invalid credentials');
 
         req.user = user;
@@ -22,18 +22,18 @@ async function loginUser(req, res) {
 
 async function signUpUser(req, res, next) {
     const { username, email, password } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     try {
         const existingUser = await User.findOne({ email: email });
         if (existingUser)
             return res.status(400).send('Email already exists');
         // return to registration page
-
         req.newUser = new User({
             username: username,
             email: email,
             password: password
         });
+        //console.log(req.newUser);
         next();
     } catch (error) {
         console.error(error);
@@ -46,8 +46,11 @@ function logout(req, res) {
     res.status(200).json({ success: "logged out" });
 }
 
-const sendOTP = (req, res) => {
+const sendOTP = (req, res, next) => {
     const otp = generateOTP();
+
+    // console.log(req.newUser);
+
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
@@ -70,18 +73,20 @@ const sendOTP = (req, res) => {
 
     transporter.sendMail(mailOptions)
         .then(info => {
-            console.log('Email sent: ', info.response);
+            //console.log('Email sent: ', info.response);
             res.cookie('otp', otp, {
                 httpOnly: true,
                 secure: true,
                 maxAge: 600000
             })
+            next();
             // send to otp entering page
             // next();
         })
         .catch(err => {
             console.error('Error: ', err);
         });
+        
 };
 
 module.exports = { loginUser, signUpUser, logout, sendOTP };
