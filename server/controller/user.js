@@ -1,6 +1,4 @@
 const User = require('../models/user');
-// const Otp = require('../models/otp');
-// const otp = require("../models/otp")
 
 const { generateToken, generateOTP } = require('../services/authentication');
 const nodemailer = require('nodemailer');
@@ -15,8 +13,7 @@ async function loginUser(req, res) {
         req.user = user;
         const token = generateToken(user);
         console.log("token ", token);
-        res.cookie('authToken', token, { httpOnly: true }).json({ "success": true });
-
+        return res.cookie('authToken', token, { httpOnly: true }).json({ "success": true });
 
     } catch (error) {
         console.error(error);
@@ -39,14 +36,11 @@ async function signUpUser(req, res, next) {
         //     email: email,
         //     password: password
         // });
-        res.cookie('userData', {
+        return res.cookie('userData', {
             username: username,
             email: email,
             password: password
         });
-        console.log(req.cookies.userData);
-        // console.log(req.newUser);
-        next();
     } catch (error) {
         console.error(error);
         return res.json({ success: false });
