@@ -62,6 +62,8 @@ function logout(req, res) {
 const sendOTP = (req, res, next) => {
     const otpValue = generateOTP();
 
+    //console.log("email : ",req.cookies.userData.email);
+
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
