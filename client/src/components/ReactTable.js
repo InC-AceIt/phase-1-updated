@@ -10,9 +10,9 @@ const ReactTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let res = await fetch('/profile/problems');
+        let res = await fetch('https://phase-1-updated.onrender.com/profile/problems');
         if (!res.ok) {
-          res = await fetch('/problems');
+          res = await fetch('https://phase-1-updated.onrender.com/problems');
           if (!res.ok) {
             throw new Error('Failed to fetch data');
           }

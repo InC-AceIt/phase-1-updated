@@ -32,7 +32,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
       return;
     }
 
-    fetch("/user/signup", {
+    fetch("https://phase-1-updated.onrender.com/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
