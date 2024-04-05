@@ -10,14 +10,20 @@ const OTPForm = ({ onOTPConfirm }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="otp">Enter OTP:</label>
+      <label className=' text-xl'htmlFor="otp">Enter OTP:</label>
       <input
+        className=" teext-lg"
         type="text"
         id="otp"
         value={otp}
         onChange={(e) => setOTP(e.target.value)}
       />
-      <button type="submit">Confirm OTP</button>
+      <br/>
+      <br/>
+      <div className="flex justify-center">
+      <button className=" border rounded-md p-2 text-lg hover:scale-110 transition duration-300"type="submit">Confirm OTP</button>
+      </div>
+      
     </form>
   );
 };

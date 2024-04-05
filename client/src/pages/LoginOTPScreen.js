@@ -41,8 +41,8 @@ const LoginOTPScreen = ({ setIsLoggedIn }) => {
     };
   
     return (
-      <div>
-        <h1>OTP Verification</h1>
+      <div className='flex flex-col w-full  h-5/6 gap-y-4 justify-center items-center'>
+        <h1 className='  text-lg font-bold'>OTP Verification</h1>
         {error && <p>{error}</p>}
         <OTPForm onOTPConfirm={handleOTPConfirm} />
         {isLoading && <p>Loading...</p>}

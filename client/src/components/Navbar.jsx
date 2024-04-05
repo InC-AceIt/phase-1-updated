@@ -21,10 +21,10 @@ const Navbar = (props) => {
                     <Link to="/">Home</Link>
                 </li>
                 <li className=" text-xl hover:scale-110 transition duration-300">
-                    <Link to="/">About</Link>
+                    <Link to="/about">About</Link>
                 </li>
                 <li className=" text-xl hover:scale-110 transition duration-300">
-                    <Link to="/">Contact</Link>
+                    <Link to="/contact">Contact</Link>
                 </li>
             </ul>
         </nav>
