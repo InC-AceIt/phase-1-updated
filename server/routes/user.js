@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { loginUser, signUpUser, logout, sendOTP } = require('../controller/user.js');
 const { generateToken } = require('../services/authentication.js');
-const User = require('../models/User.js');
+const User = require('../models/user.js');
 
 
 router.post('/login', loginUser);
