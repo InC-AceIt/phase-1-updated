@@ -9,8 +9,25 @@ router.post('/login', loginUser);
 
 router.post('/signup', signUpUser, sendOTP);
 
+router.post('/refetch', async (req, res) => {
+    const { email } = req.body;
+    const password = "12345"
+    const user = await User.findOne({email, password});
+    console.log(user);
+    if (!user) {
+        console.log("user not found");
+        return res.status(400).json({"success": false})
+    }
+
+    const token = generateToken(user);
+    console.log("token ", token);
+    return res.status(200).cookie('authToken', token, { httpOnly: true, secure: true }).json({"success": true});
+})
+
 router.post("/verify/otp", async(req,res)=>{
+    console.log("backend", req.body.otp);
     if(req.cookies.otp !== req.body.otp) {
+        console.log("wrong otp");
         return res.json({"ok":false});
     }
     console.log("otp here");

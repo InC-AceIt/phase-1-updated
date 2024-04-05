@@ -16,6 +16,24 @@ import LoginOTPScreen from "./pages/LoginOTPScreen";
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    fetch('/user/refetch', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: localStorage.getItem('EMAIL')
+      })
+    }).then(response => {
+      if (response.ok) {
+          setIsLoggedIn(true);
+      } else {
+        window.alert("failed to revalidate user")
+      }
+  })
+  });
  
 
   return (
