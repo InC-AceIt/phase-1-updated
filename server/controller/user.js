@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/user');
 // const Otp = require('../models/otp');
 // const otp = require("../models/otp")
 
@@ -10,17 +10,17 @@ async function loginUser(req, res) {
     try {
         const user = await User.findOne({ email });
         //console.log(user);
-        if (!user) return res.json({"success": false})
+        if (!user) return res.json({ "success": false })
 
         req.user = user;
         const token = generateToken(user);
         console.log("token ", token);
-        res.cookie('authToken', token, { httpOnly: true }).json({"success": true});
-        
-        
+        res.cookie('authToken', token, { httpOnly: true }).json({ "success": true });
+
+
     } catch (error) {
         console.error(error);
-        return res.json({"success": false});
+        return res.json({ "success": false });
     }
 }
 
@@ -31,7 +31,7 @@ async function signUpUser(req, res, next) {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
             // If existing user is present, render the SignUpForm component
-           return res.json({success : false});
+            return res.json({ success: false });
         }
         // Continue with user registration
         // req.newUser = new User({
@@ -49,7 +49,7 @@ async function signUpUser(req, res, next) {
         next();
     } catch (error) {
         console.error(error);
-        return res.json({success : false});
+        return res.json({ success: false });
     }
 }
 
@@ -92,11 +92,11 @@ const sendOTP = (req, res, next) => {
             //     otp: otpValue
             // });
             //console.log("otp : ",otpValue);
-            return res.cookie('otp',otpValue, {
+            return res.cookie('otp', otpValue, {
                 httpOnly: true,
                 secure: true,
                 maxAge: 60000
-            }).json({"success":true});
+            }).json({ "success": true });
             //console.log("HELLO", req.newUser.email);
             // await otp.save();
             // res.json({success : true});
@@ -107,7 +107,7 @@ const sendOTP = (req, res, next) => {
         })
         .catch(err => {
             console.error('Error: ', err);
-            return res.json({"success" : false});
+            return res.json({ "success": false });
         });
 };
 
