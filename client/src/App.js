@@ -11,6 +11,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import InterviewPrep from "./pages/InterviewPrep";
 import AnalyzeProf from "./pages/AnalyzeProf";
 import LoginOTPScreen from "./pages/LoginOTPScreen";
+import Resume  from "./pages/Resume";
+import About  from "./pages/About";
+import  Contact  from "./pages/Contact";
+
 
 
 function App() {
@@ -46,6 +50,8 @@ function App() {
         <Route path="/user/login" element = {<Login  setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/user/signup" element={<Signup  setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/otp" element={<LoginOTPScreen  setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/about" element={<About  setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/contact" element={<Contact  setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/dashboard" element = {
           <PrivateRoute isLoggedIn={isLoggedIn}>
               <Dashboard/>
@@ -61,6 +67,10 @@ function App() {
         <Route path="/analyzeprof" element = {
         <PrivateRoute isLoggedIn={isLoggedIn}>
             <AnalyzeProf/>
+        </PrivateRoute>} />
+        <Route path="/resume" element = {
+        <PrivateRoute isLoggedIn={isLoggedIn}>
+            <Resume/>
         </PrivateRoute>} />
        
         

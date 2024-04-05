@@ -26,6 +26,11 @@ const DSAPieChart = ({ tags }) => {
 };
 
 // Define a color palette for the pie chart
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
+const COLORS = [
+  '#16a085', '#27ae60', '#2c3e50', '#f39c12', '#e74c3c',
+  '#9b59b6', '#fb6964', '#342224', '#472e32', '#b33939',
+  '#e74c3c', '#2ecc71', '#3498db', '#95a5a6', '#f1c40f',
+  '#e040fb', '#d35400', '#f39c12', '#2c3e50', '#bdc3c7'
+];
 
 export default DSAPieChart;
