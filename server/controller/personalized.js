@@ -75,7 +75,7 @@ async function getUserAnalysis(req, res) {
     const submissionsData = await response.json();
     // return res.json(submissionsData);
 
-    console.log("username: ",req.user.username);
+    //console.log("username: ",req.user.username);
     const acceptance = {};
     const tagFrequency = {};
 
@@ -84,7 +84,7 @@ async function getUserAnalysis(req, res) {
       const rating = parseInt(submission.problem.rating); // Parse rating as integer
       const verdict = submission.verdict;
 
-      console.log("Rating:", rating); // Log the rating to see if it's parsed correctly
+      //console.log("Rating:", rating); // Log the rating to see if it's parsed correctly
 
       if (!isNaN(rating)) { // Check if the rating is a valid number
         if (!acceptance[rating]) {
