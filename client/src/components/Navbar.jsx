@@ -51,6 +51,7 @@ const Navbar = (props) => {
                 <Link to="/">
                     <button onClick={() => {
                         setIsLoggedIn(false);
+                        localStorage.removeItem("EMAIL")
                         toast.success("Logged Out");
                     }}
                     className='text-xl bg-richblack-800 text-richblack-100 py-[8px] 
