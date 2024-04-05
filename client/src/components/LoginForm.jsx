@@ -37,6 +37,7 @@ const LoginForm = ({setIsLoggedIn}) => {
         .then(response => {
             if (response.ok) {
                 // If login is successful, set isLoggedIn to true
+                localStorage.setItem("EMAIL", formData.email)
                 setIsLoggedIn(true);
                 toast.success("Logged In");
                 navigate("/dashboard");

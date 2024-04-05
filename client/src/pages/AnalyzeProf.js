@@ -1,46 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import DSAPieChart from '../components/DSAPieChart';
-import { useState,useEffect } from 'react';
 import RatingBarChart from '../components/RatingBarChart';
 
-
-
 const AnalyzeProf = () => {
-
-  const [tags, setTags] = React.useState([]);
-  const [ratingData, setRatingData] = useState([]);
+  const [pieData, setPieData] = useState({});
+  const [barData, setBarData] = useState({});
 
   useEffect(() => {
-    // Fetch tags from your backend API
-    const fetchTags = async () => {
-      const res = await fetch('---');
-      const data = await res.json();
-      setTags(data);
-    };
-    fetchTags();
     const fetchData = async () => {
-      const response = await fetch('--');
-      const data = await response.json();
-      setRatingData(data);
+      try {
+        const response = await fetch('/profile/analysis');
+        const data = await response.json();
+        setPieData(data.pie);
+        setBarData(data.bar);
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle error
+      }
     };
-
     fetchData();
   }, []);
 
   return (
     <div>
-    <div>
-      <h1>DSAPieChart </h1>
-      {tags.length > 0 && <DSAPieChart tags={tags} />}
+      <div>
+        <h1>DSAPieChart</h1>
+        <DSAPieChart tags={Object.entries(pieData)} />
+      </div>
+      <div>
+        <h1>RatingBarChart</h1>
+        <RatingBarChart ratingData={Object.entries(barData)} />
+      </div>
     </div>
-    <div>
-      <h1>Bar Chart</h1>
-      <RatingBarChart ratingData={ratingData} />
-    </div>
-  
-    </div>
-    
-  )
-}
+  );
+};
 
-export default AnalyzeProf
+export default AnalyzeProf;

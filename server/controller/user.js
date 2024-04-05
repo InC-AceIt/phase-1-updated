@@ -6,20 +6,21 @@ const { generateToken, generateOTP } = require('../services/authentication');
 const nodemailer = require('nodemailer');
 
 async function loginUser(req, res) {
-    const { email, password } = req.body;
+    const { email } = req.body;
     try {
-        const user = await User.findOne({ email, password });
+        const user = await User.findOne({ email });
         //console.log(user);
-        if (!user) return res.json("")
+        if (!user) return res.json({"success": false})
 
         req.user = user;
         const token = generateToken(user);
         console.log("token ", token);
-        res.cookie('authToken', token, { httpOnly: true });
+        res.cookie('authToken', token, { httpOnly: true }).json({"success": true});
+        
         
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        return res.json({"success": false});
     }
 }
 

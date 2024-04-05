@@ -59,7 +59,7 @@ async function getUserProblems(req, res) {
       link: `https://codeforces.com/problemset/problem/${problem.contestId}/${problem.index}`,
     }));
 
-    res.json({ avgRating, filteredProblems: formattedProblems });
+    res.json(formattedProblems);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).send("Error fetching data");
@@ -81,12 +81,12 @@ async function getUserAnalysis(req, res) {
 
    
     submissionsData.result.forEach(submission => {
-      
-      
-        const rating = submission.problem.rating;
-        const verdict = submission.verdict;
+      const rating = parseInt(submission.problem.rating); // Parse rating as integer
+      const verdict = submission.verdict;
 
-        
+      console.log("Rating:", rating); // Log the rating to see if it's parsed correctly
+
+      if (!isNaN(rating)) { // Check if the rating is a valid number
         if (!acceptance[rating]) {
           acceptance[rating] = { correct: 0, wrong: 0 };
         }
@@ -96,8 +96,7 @@ async function getUserAnalysis(req, res) {
           acceptance[rating].wrong++;
         }
 
-        
-        if (verdict === "OK") {
+        if (verdict === "OK" && rating <= 1600) {
           submission.problem.tags.forEach(tag => {
             if (!tagFrequency[tag]) {
               tagFrequency[tag] = 1;
@@ -106,14 +105,15 @@ async function getUserAnalysis(req, res) {
             }
           });
         }
-      
+      } else {
+        console.log("Invalid rating:", submission.problem.rating);
+      }
     });
 
-    
     for (const rating in acceptance) {
       const correct = acceptance[rating].correct;
       const wrong = acceptance[rating].wrong;
-      acceptance[rating] = (correct / wrong) * 100;
+      acceptance[rating] = (correct / (correct + wrong)) * 100;
     }
 
    

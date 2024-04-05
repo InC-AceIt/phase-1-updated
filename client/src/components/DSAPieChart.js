@@ -3,9 +3,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 
 const DSAPieChart = ({ tags }) => {
   // Transform the tags data into a format suitable for PieChart
-  const data = tags.map((tag) => {
-    return { name: tag.name, value: tag.count };
-  });
+  const data = tags.map(([name, value]) => ({ name, value }));
 
   return (
     <PieChart width={300} height={300}>
