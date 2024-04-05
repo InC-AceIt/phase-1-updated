@@ -22,7 +22,7 @@ const ResumeForm = () => {
     
       const data = await response.json();
       console.log(data);
-      navigate("/profile/interviewprep")
+      navigate("/profile/interviewprep",{state:{data}});
     } catch (error) {
       console.error(error);
     }
