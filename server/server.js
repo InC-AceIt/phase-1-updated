@@ -6,7 +6,10 @@ const problems = require("./routes/problems.js");
 const personalized = require("./routes/personalized.js");
 const user = require("./routes/user");
 const { authenticateUser } = require("./middleware/authentication.js"); // Import authentication middleware
+const cors = require("cors")
 const app = express();
+
+app.use(cors())
 
 const PORT = process.env.PORT || 5000;
 
