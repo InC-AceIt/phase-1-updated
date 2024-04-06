@@ -1,25 +1,25 @@
-const User = require("../models/User");
-// const Otp = require('../models/otp');
-// const otp = require("../models/otp")
+
+const User = require('../models/user');
 
 const { generateToken, generateOTP } = require("../services/authentication");
 const nodemailer = require("nodemailer");
 
 async function loginUser(req, res) {
-  const { email } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    //console.log(user);
-    if (!user) return res.json({ success: false });
+    const { email } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        //console.log(user);
+        if (!user) return res.json({ "success": false })
 
-    req.user = user;
-    const token = generateToken(user);
-    console.log("token ", token);
-    res.cookie("authToken", token, { httpOnly: true }).json({ success: true });
-  } catch (error) {
-    console.error(error);
-    return res.json({ success: false });
-  }
+        req.user = user;
+        const token = generateToken(user);
+        console.log("token ", token);
+        return res.cookie('authToken', token, { httpOnly: true }).json({ "success": true });
+
+    } catch (error) {
+        console.error(error);
+        return res.json({ "success": false });
+    }
 }
 
 async function signUpUser(req, res, next) {
@@ -87,35 +87,31 @@ const sendOTP = (req, res, next) => {
     subject: "Last step for the first step",
     text: `Welcome ${req.cookies.userData.username}. Your OTP for registration is: ${otpValue}`,
   };
-
-  transporter
-    .sendMail(mailOptions)
-    .then(async (info) => {
-      // Email sent successfully, store OTP in database
-      // const otp = new Otp({
-      //     email: req.newUser.email,
-      //     otp: otpValue
-      // });
-      //console.log("otp : ",otpValue);
-      return res
-        .cookie("otp", otpValue, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 60000,
+    transporter.sendMail(mailOptions)
+        .then(async info => {
+            // Email sent successfully, store OTP in database
+            // const otp = new Otp({
+            //     email: req.newUser.email, 
+            //     otp: otpValue
+            // });
+            //console.log("otp : ",otpValue);
+            return res.cookie('otp', otpValue, {
+                httpOnly: true,
+                secure: true,
+                maxAge: 60000
+            }).json({ "success": true });
+            //console.log("HELLO", req.newUser.email);
+            // await otp.save();
+            // res.json({success : true});
+            // return res.status(200).json({
+            //     success: true,
+            //     message: "Login Succesful",
+            // });
         })
-        .json({ success: true });
-      //console.log("HELLO", req.newUser.email);
-      // await otp.save();
-      // res.json({success : true});
-      // return res.status(200).json({
-      //     success: true,
-      //     message: "Login Succesful",
-      // });
-    })
-    .catch((err) => {
-      console.error("Error: ", err);
-      return res.json({ success: false });
-    });
+        .catch(err => {
+            console.error('Error: ', err);
+            return res.json({ "success": false });
+        });
 };
 
 module.exports = { loginUser, signUpUser, logout, sendOTP };

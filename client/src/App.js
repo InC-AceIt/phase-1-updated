@@ -19,11 +19,11 @@ function App() {
 
 
 
-    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem("EMAIL")?.length>0 ? true : false));
+    const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem("EMAIL")?.length > 0 ? true : false));
 
     useEffect(() => {
         console.log(isLoggedIn)
-        fetch('/user/refetch', {
+        fetch('https://phase-1-updated.onrender.com/user/refetch', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,34 +48,34 @@ function App() {
 
             <Routes>
 
-        <Route path="/" element= {<Home isLoggedIn={isLoggedIn}/>} />
-        <Route path="/user/login" element = {<Login  setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/user/signup" element={<Signup  setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/otp" element={<LoginOTPScreen  setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/about" element={<About  setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/contact" element={<Contact  setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/dashboard" element = {
-          <PrivateRoute isLoggedIn={isLoggedIn}>
-              <Dashboard/>
-          </PrivateRoute>} />
-        <Route path="/questsug" element = {
-        <PrivateRoute isLoggedIn={isLoggedIn}>
-            <QuestSug/>
-        </PrivateRoute>} />
-        <Route path="/profile/interviewprep" element = {
-        <PrivateRoute isLoggedIn={isLoggedIn}>
-            <InterviewPrep/>
-        </PrivateRoute>} />
-        <Route path="/analyzeprof" element = {
-        <PrivateRoute isLoggedIn={isLoggedIn}>
-            <AnalyzeProf/>
-        </PrivateRoute>} />
-        <Route path="/resume" element = {
-        <PrivateRoute isLoggedIn={isLoggedIn}>
-            <Resume/>
-        </PrivateRoute>} />
-       
-        
+                <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
+                <Route path="/user/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/user/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/otp" element={<LoginOTPScreen setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/about" element={<About setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/contact" element={<Contact setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/dashboard" element={
+                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                        <Dashboard />
+                    </PrivateRoute>} />
+                <Route path="/questsug" element={
+                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                        <QuestSug />
+                    </PrivateRoute>} />
+                <Route path="/profile/interviewprep" element={
+                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                        <InterviewPrep />
+                    </PrivateRoute>} />
+                <Route path="/analyzeprof" element={
+                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                        <AnalyzeProf />
+                    </PrivateRoute>} />
+                <Route path="/resume" element={
+                    <PrivateRoute isLoggedIn={isLoggedIn}>
+                        <Resume />
+                    </PrivateRoute>} />
+
+
 
             </Routes>
 

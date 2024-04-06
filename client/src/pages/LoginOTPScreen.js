@@ -15,7 +15,7 @@ const LoginOTPScreen = ({ setIsLoggedIn }) => {
   
       try {
         // Send the OTP to your backend using fetch API
-        const response = await fetch("/user/verify/otp", {
+        const response = await fetch("https://phase-1-updated.onrender.com/user/verify/otp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

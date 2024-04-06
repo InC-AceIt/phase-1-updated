@@ -9,7 +9,7 @@ const AnalyzeProf = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/profile/analysis');
+        const response = await fetch('https://phase-1-updated.onrender.com/profile/analysis');
         const data = await response.json();
         setPieData(data.pie);
         setBarData(data.bar);
