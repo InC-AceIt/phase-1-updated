@@ -4,9 +4,9 @@ import { useTable, usePagination } from "react-table";
 import "./InterInner.css";
 import { useState } from 'react';
 
-const InterInner = ({response}) => {
+const InterInner = ({ response }) => {
 
-  console.log("res: ",response);
+  console.log("res: ", response);
 
 
   const [loading, setLoading] = useState(true);
@@ -17,9 +17,9 @@ const InterInner = ({response}) => {
   // useEffect(() => {
   //   const fetchInter = async () => {
   //     try {
-  //       let res = await fetch('/profile/interviewprep');
+  //       let res = await fetch('https://phase-1-updated.onrender.comprofile/interviewprep');
   //       if (!res.ok) {
-  //         res = await fetch('/problems');
+  //         res = await fetch('https://phase-1-updated.onrender.comproblems');
   //         if (!res.ok) {
   //           throw new Error('Failed to fetch data');
   //         }
@@ -35,7 +35,7 @@ const InterInner = ({response}) => {
   //   fetchInter();
   // }, []);
 
-  
+
 
 
   const data = React.useMemo(() => matchQue, [matchQue]);
@@ -53,12 +53,12 @@ const InterInner = ({response}) => {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow, nextPage, previousPage, canPreviousPage, canNextPage} =
-    useTable({ columns, data },usePagination);
+  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow, nextPage, previousPage, canPreviousPage, canNextPage } =
+    useTable({ columns, data }, usePagination);
 
   return (
     <div className=" max-w-[900px] flex-col gap-y-4 mx-auto">
-        <div className="container">
+      <div className="container">
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -84,15 +84,15 @@ const InterInner = ({response}) => {
             })}
           </tbody>
         </table>
-        </div>
-        <div className='btn-container'>
-            <button disabled={!canPreviousPage} onClick={previousPage}>
-               prev
-            </button>
-            <button disabled={!canNextPage} onClick={nextPage}>
-               next 
-            </button>
-        </div>
+      </div>
+      <div className='btn-container'>
+        <button disabled={!canPreviousPage} onClick={previousPage}>
+          prev
+        </button>
+        <button disabled={!canNextPage} onClick={nextPage}>
+          next
+        </button>
+      </div>
     </div>
   );
 }
