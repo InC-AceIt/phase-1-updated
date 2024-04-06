@@ -29,7 +29,7 @@ const LoginOTPScreen = ({ setIsLoggedIn }) => {
         }
   
         // Handle success and navigate to another page or perform any desired action
-        alert("OTP verified successfully!");
+        // alert("OTP verified successfully!");
         console.log("otp verified");
         setIsLoggedIn(true);
         navigate("/dashboard");
