@@ -13,9 +13,11 @@ const {
   getUserProblems,
   getUserAnalysis,
 } = require("../controller/personalized");
+const { getProblems } = require('../controller/problems');
 
 router.get("/problems", getUserProblems);
 router.get("/analysis", getUserAnalysis);
+router.get('/problemset', getProblems)
 router.post('/upload', upload.single('resume'), async (req, res) => {
     try {
         // Check if file was uploaded

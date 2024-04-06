@@ -46,14 +46,14 @@ async function getProblems(req, res) {
           });
         }
       }
+  
+      // Return the filtered problems in JSON format
+      
+      return res.json(filteredProblems);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return res.status(500).send("Error fetching data");
     }
-
-    // Return the filtered problems in JSON format
-    res.json(filteredProblems);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    res.status(500).send("Error fetching data");
-  }
 }
 
 module.exports = {
