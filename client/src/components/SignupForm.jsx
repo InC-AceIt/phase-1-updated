@@ -45,6 +45,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
       .then((data) => {
         if (data.success) {
           console.log(data);
+          alert(data.error);
           // If signup is successful, redirect to OTP verification page
           navigate("/otp");
         } else {
