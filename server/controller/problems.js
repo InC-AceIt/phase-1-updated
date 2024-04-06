@@ -49,6 +49,7 @@ async function getProblems(req, res) {
       }
   
       // Return the filtered problems in JSON format
+      
       res.json(filteredProblems);
     } catch (error) {
       console.error("Error fetching data:", error);
